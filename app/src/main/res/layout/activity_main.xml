@@ -2,18 +2,175 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_background" />
+
+    <ImageButton
+        android:id="@+id/forward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@null"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/backward"
+        app:layout_constraintEnd_toEndOf="@+id/backward"
+        app:layout_constraintStart_toStartOf="@+id/backward"
+        app:srcCompat="@drawable/ic_dirbutton_unpressed" />
+
+    <ImageButton
+        android:id="@+id/backward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@null"
+        android:rotation="180"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_dirbutton_unpressed" />
+
+    <ImageButton
+        android:id="@+id/linetracking"
+        style="@android:style/Widget.Holo.Light.ImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:onClick="clickLineTracking"
+        app:layout_constraintBottom_toBottomOf="@+id/collision"
+        app:layout_constraintEnd_toStartOf="@+id/collision"
+        app:layout_constraintTop_toTopOf="@+id/collision"
+        app:srcCompat="@drawable/ic_icon_linetracking_off" />
+
+    <ImageButton
+        android:id="@+id/collision"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:background="@null"
+        android:onClick="clickCollision"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:srcCompat="@drawable/ic_icon_collision_off" />
+
+    <ImageButton
+        android:id="@+id/manual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@null"
+        android:onClick="clickManual"
+        app:layout_constraintBottom_toBottomOf="@+id/collision"
+        app:layout_constraintStart_toEndOf="@+id/collision"
+        app:layout_constraintTop_toTopOf="@+id/collision"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_icon_manual_off" />
+
+    <TextView
+        android:id="@+id/debugtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Test"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/background" />
+
+    <ImageButton
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/left"
+        app:layout_constraintStart_toEndOf="@+id/left"
+        app:srcCompat="@drawable/ic_dirbuttonlr_unpressed" />
+
+    <ImageButton
+        android:id="@+id/left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@null"
+        android:rotation="180"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/forward"
+        app:srcCompat="@drawable/ic_dirbuttonlr_unpressed" />
+
+    <ImageView
+        android:id="@+id/motiontoggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:onClick="clickManualMotion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_motion_off" />
+
+    <TextView
+        android:id="@+id/motiontoggletext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Motion Off"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/motiontoggle"
+        app:layout_constraintEnd_toEndOf="@+id/motiontoggle"
+        app:layout_constraintStart_toStartOf="@+id/motiontoggle"
+        app:layout_constraintTop_toTopOf="@+id/motiontoggle" />
+
+    <Button
+        android:id="@+id/bluetoothbutton_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:onClick="buttonPairFunc"
+        android:text="Connect"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background" />
+
+    <Button
+        android:id="@+id/bluetoothbutton_disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="disconnectCar"
+        android:text="Disconnect"
+        app:layout_constraintEnd_toEndOf="@+id/bluetoothbutton_connect"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/bluetoothbutton_connect"
+        app:layout_constraintTop_toBottomOf="@+id/bluetoothbutton_connect" />
+
 </android.support.constraint.ConstraintLayout>

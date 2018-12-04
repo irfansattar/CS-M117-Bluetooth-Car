@@ -3,11 +3,6 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
-        <entry key="imageWizard">
-          <value>
-            <PersistentState />
-          </value>
-        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -19,11 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="411" />
-                            <entry key="outputName" value="ic_background" />
+                            <entry key="height" value="35" />
+                            <entry key="outputName" value="ic_motion_off" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Will Htun\Desktop\background.svg" />
-                            <entry key="width" value="823" />
+                            <entry key="sourceFile" value="C:\Users\Will Htun\Desktop\motion_off.svg" />
+                            <entry key="width" value="180" />
                           </map>
                         </option>
                       </PersistentState>
