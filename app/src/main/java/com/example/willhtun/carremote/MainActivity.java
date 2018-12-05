@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private UUID SERVICE_UUID = UUID.fromString(SERVICE_UUID_STRING);
     private UUID READ_WRITE_UUID = UUID.fromString(READ_WRITE_UUID_STRING);
     private boolean deviceConnected = false;
+    private boolean bluetoothConnected = false;
     private boolean initialized = false;
 
     private boolean connectionMade = false;
@@ -130,11 +132,11 @@ public class MainActivity extends AppCompatActivity {
                     if (Math.abs(rotateY) > threshold) {
                         if (rotateY > 0) {
 //                    Toast.makeText(getApplicationContext(), "FORWARD", Toast.LENGTH_SHORT).show();
-                            displayLog.setText("Rotation Direction - FORWARD");
+                            //TEMP displayLog.setText("Rotation Direction - FORWARD");
                             sendData("f");
                         } else {
 //                    Toast.makeText(getApplicationContext(), "BACKWARDS", Toast.LENGTH_SHORT).show();
-                            displayLog.setText("Rotation Direction - BACKWARDS");
+                            //TEMP displayLog.setText("Rotation Direction - BACKWARDS");
                             sendData("b");
                         }
                     }
@@ -142,11 +144,11 @@ public class MainActivity extends AppCompatActivity {
                     if (Math.abs(rotateZ) > threshold) {
                         if (rotateZ > 0) {
 //                    Toast.makeText(getApplicationContext(), "LEFT", Toast.LENGTH_SHORT).show();
-                            displayLog.setText("Rotation Direction - LEFT");
+                            //TEMP displayLog.setText("Rotation Direction - LEFT");
                             sendData("l");
                         } else {
 //                    Toast.makeText(getApplicationContext(), "RIGHT", Toast.LENGTH_SHORT).show();
-                            displayLog.setText("Rotation Direction - RIGHT");
+                            //TEMP displayLog.setText("Rotation Direction - RIGHT");
                             sendData("r");
                         }
                     }
@@ -184,8 +186,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         bluetoothGatt.close();
-//        bluetoothGatt.disconnect();
         bluetoothGatt = null;
+        bluetoothConnected = false;
+        ((ImageView) findViewById(R.id.bluetoothindicator)).setImageResource(R.drawable.ic_bluetoothoff);
+        ((Button) findViewById(R.id.bluetoothbutton_connect)).setVisibility(View.VISIBLE);
+        ((Button) findViewById(R.id.bluetoothbutton_disconnect)).setVisibility(View.INVISIBLE);
     }
 
     public void stopCar(View view){
@@ -194,14 +199,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendData(String data)
     {
-        BluetoothGattService service = bluetoothGatt.getService(SERVICE_UUID);
-        BluetoothGattCharacteristic characteristic = service.getCharacteristic(READ_WRITE_UUID);
+        if (bluetoothConnected) {
+            BluetoothGattService service = bluetoothGatt.getService(SERVICE_UUID);
+            BluetoothGattCharacteristic characteristic = service.getCharacteristic(READ_WRITE_UUID);
 
-        byte[] messageBytes = new byte[0];
+            byte[] messageBytes = new byte[0];
 
-        messageBytes = data.getBytes();
-        characteristic.setValue(messageBytes);
-        bluetoothGatt.writeCharacteristic(characteristic);
+            messageBytes = data.getBytes();
+            characteristic.setValue(messageBytes);
+            bluetoothGatt.writeCharacteristic(characteristic);
+        }
     }
 
     //Simply saves reference to car device or starts discovery mode to discover and then save reference to car
@@ -239,6 +246,10 @@ public class MainActivity extends AppCompatActivity {
                     displayLog.setText("Saving device: " + tempDevice.getName());
                     bluetoothAdapter.cancelDiscovery();
                     connectionMade = BTconnect();
+                    bluetoothConnected = true;
+                    ((ImageView) findViewById(R.id.bluetoothindicator)).setImageResource(R.drawable.ic_bluetoothon);
+                    ((Button) findViewById(R.id.bluetoothbutton_connect)).setVisibility(View.INVISIBLE);
+                    ((Button) findViewById(R.id.bluetoothbutton_disconnect)).setVisibility(View.VISIBLE);
                     return;
                 }
             }
@@ -303,15 +314,6 @@ public class MainActivity extends AppCompatActivity {
 
             displayLog.setText(messageString);
         }
-
-//        @Override
-//        public void onCharacteristicRead(BluetoothGatt gatt,
-//                                         BluetoothGattCharacteristic characteristic,
-//                                         int status) {
-//            if (status == BluetoothGatt.GATT_SUCCESS) {
-//                broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-//            }
-//        }
 
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
@@ -413,25 +415,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveForward() {
         if (mode == 1) {
-            displayLog.setText("Move Forward");
             sendData("f");
         }
     }
     public void moveBackward() {
         if (mode == 1) {
-            displayLog.setText("Move Backward");
             sendData("b");
         }
     }
     public void moveLeft() {
         if (mode == 1) {
-            displayLog.setText("Move Left");
             sendData("l");
         }
     }
     public void moveRight() {
         if (mode == 1) {
-            displayLog.setText("Move Right");
             sendData("r");
         }
     }

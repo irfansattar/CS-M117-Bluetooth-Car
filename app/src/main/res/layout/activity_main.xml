@@ -93,7 +93,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Test"
+        android:text=""
         android:textColor="@android:color/background_dark"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -153,24 +153,40 @@
 
     <Button
         android:id="@+id/bluetoothbutton_connect"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:onClick="buttonPairFunc"
         android:text="Connect"
+        android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintStart_toStartOf="@+id/background"
         app:layout_constraintTop_toTopOf="@+id/background" />
 
     <Button
         android:id="@+id/bluetoothbutton_disconnect"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:onClick="disconnectCar"
         android:text="Disconnect"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/bluetoothbutton_connect"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/bluetoothbutton_connect"
-        app:layout_constraintTop_toBottomOf="@+id/bluetoothbutton_connect" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/bluetoothindicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:srcCompat="@drawable/ic_bluetoothoff" />
 
 </android.support.constraint.ConstraintLayout>
